@@ -1,6 +1,4 @@
---Pr�ctica 3: Watchdog
---Carles Garcia Llin�s
---Diego Isa�as Pacheco Torres
+--Watchdog
 
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
@@ -8,12 +6,11 @@ use ieee.numeric_std.all;
 
 
 ENTITY watchdog IS
-  PORT (CLK, RESET, START_C, LOAD : IN STD_LOGIC;
-        CTC : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
-        TIMER_OUT : OUT STD_LOGIC
-		  );
+  PORT (CLK, RESET, START_C, LOAD 	: IN STD_LOGIC;
+        CTC 				: IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+        TIMER_OUT 			: OUT STD_LOGIC
+       );
 END watchdog;
-
 
 
 ARCHITECTURE behavioral OF watchdog IS
@@ -23,27 +20,23 @@ ARCHITECTURE behavioral OF watchdog IS
   TYPE state_a IS (SA0, SA1, SA2, SA3, SA4);
   TYPE state_b IS (SB0, SB1, SB2, SB3);
 -- Signals
-  SIGNAL NEXT_SA, CURRENT_SA : state_a := SA0;
-  SIGNAL NEXT_SB, CURRENT_SB : state_b := SB0;
-  SIGNAL ICV, CHV : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0'); 
-  SIGNAL RESETICV, ENICV, EDGES,IMIN :  STD_LOGIC;
-  SIGNAL counter : UNSIGNED(31 DOWNTO 0) := (OTHERS => '0');
-  BEGIN 
-  
-  
-  
+  SIGNAL NEXT_SA, CURRENT_SA 		: state_a := SA0;
+  SIGNAL NEXT_SB, CURRENT_SB 		: state_b := SB0;
+  SIGNAL ICV, CHV 			: STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0'); 
+  SIGNAL RESETICV, ENICV, EDGES,IMIN 	:  STD_LOGIC;
+  SIGNAL counter 			: UNSIGNED(31 DOWNTO 0) := (OTHERS => '0');
+
+  BEGIN   
 -- icv-chv comparer
 comparer : PROCESS(ICV, CHV)
 BEGIN
   IF (ICV < CHV) THEN IMIN<='1'; ELSE IMIN<='0';
   END IF;  
 END PROCESS comparer;
-   
-   
-   
--- moore machine edges (MACHINE B)
+      
+-- Moore machine edges (MACHINE B)
 
--- machine B clock/reset
+-- Machine B clock/reset
 edges_clk : PROCESS(RESET, CLK)
   BEGIN
   IF(RESET = '0') THEN CURRENT_SB<=SB0;
@@ -51,7 +44,7 @@ edges_clk : PROCESS(RESET, CLK)
   END IF;
 END PROCESS edges_clk;
 
---machine b states 
+--Machine B states 
 state_manager_b : PROCESS(CURRENT_SB, START_C, RESET)
 BEGIN
   CASE CURRENT_SB IS
@@ -62,7 +55,7 @@ BEGIN
   END CASE;    
 END PROCESS state_manager_b;
 
---machine b outputs
+--Machine B outputs
 outputs_b : PROCESS(CURRENT_SB)
 BEGIN
   CASE CURRENT_SB IS
@@ -73,9 +66,9 @@ END PROCESS outputs_b;
 
 
 
--- moore machine main (MACHINE A)
+-- Moore machine main (MACHINE A)
 
---machine a clock/reset
+-- Machine A clock/reset
 main_clk : PROCESS(CLK, RESET)
 BEGIN
   IF(RESET = '0') THEN CURRENT_SA<=SA0;
@@ -83,7 +76,7 @@ BEGIN
   END IF;
 END PROCESS main_clk;
 
---machine a states
+--Machine A states
 state_manager_a : PROCESS (CURRENT_SA, LOAD, EDGES, IMIN)
 BEGIN
   CASE CURRENT_SA IS
@@ -104,7 +97,7 @@ BEGIN
   END CASE;  
 END PROCESS state_manager_a; 
 
---machine a outputs
+-- Machine A outputs
 outputs_a : PROCESS(CURRENT_SA)
 BEGIN
   CASE CURRENT_SA IS
@@ -118,9 +111,7 @@ BEGIN
 END PROCESS outputs_a;
 
 
-
---counter ICV
-
+-- Counter ICV
 counter_icv : PROCESS (CLK)
 
 BEGIN
@@ -133,12 +124,8 @@ IF ((RESETICV = '0')AND RISING_EDGE(CLK)) THEN COUNTER <= (OTHERS => '0');
  
 END PROCESS counter_icv;
 
---counter output management
+-- Counter output management
 ICV <= STD_LOGIC_VECTOR(counter);
-
-
-
-
 
 END behavioral; 
 
