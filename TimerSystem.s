@@ -140,7 +140,7 @@ LOOP_7SEG:
 	addi	r4, r4, 1
 	addi	r6, r6, 1			/*Next pointer position for maskbits and hexbytedot*/
 	
-	bne	r5, r7, LOOP_7SEG		/*Compares key(rows+cols) with the keycheck register*/
+	bne     r5, r7, LOOP_7SEG	/*Compares key(rows+cols) with the keycheck register*/
 	
 /*From here, key is identified*/
 	movia 	r2, addr_7segsB
