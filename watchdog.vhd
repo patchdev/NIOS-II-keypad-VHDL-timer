@@ -7,8 +7,8 @@ use ieee.numeric_std.all;
 
 ENTITY watchdog IS
   PORT (CLK, RESET, START_C, LOAD 	: IN STD_LOGIC;
-        CTC 				: IN STD_LOGIC_VECTOR (31 DOWNTO 0);
-        TIMER_OUT 			: OUT STD_LOGIC
+        CTC 				                : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+        TIMER_OUT 			            : OUT STD_LOGIC
        );
 END watchdog;
 
@@ -20,11 +20,11 @@ ARCHITECTURE behavioral OF watchdog IS
   TYPE state_a IS (SA0, SA1, SA2, SA3, SA4);
   TYPE state_b IS (SB0, SB1, SB2, SB3);
 -- Signals
-  SIGNAL NEXT_SA, CURRENT_SA 		: state_a := SA0;
-  SIGNAL NEXT_SB, CURRENT_SB 		: state_b := SB0;
-  SIGNAL ICV, CHV 			: STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0'); 
+  SIGNAL NEXT_SA, CURRENT_SA 		      : state_a := SA0;
+  SIGNAL NEXT_SB, CURRENT_SB 		      : state_b := SB0;
+  SIGNAL ICV, CHV 			              : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0'); 
   SIGNAL RESETICV, ENICV, EDGES,IMIN 	:  STD_LOGIC;
-  SIGNAL counter 			: UNSIGNED(31 DOWNTO 0) := (OTHERS => '0');
+  SIGNAL counter 			                : UNSIGNED(31 DOWNTO 0) := (OTHERS => '0');
 
   BEGIN   
 -- icv-chv comparer
@@ -101,8 +101,8 @@ END PROCESS state_manager_a;
 outputs_a : PROCESS(CURRENT_SA)
 BEGIN
   CASE CURRENT_SA IS
-    WHEN SA3 => RESETICV<='1'; ENICV<='1'; TIMER_OUT<='0';
-    WHEN SA4 => RESETICV<='1'; TIMER_OUT<='1'; ENICV<='0'; 
+    WHEN SA3    => RESETICV<='1'; ENICV<='1'; TIMER_OUT<='0';
+    WHEN SA4    => RESETICV<='1'; TIMER_OUT<='1'; ENICV<='0'; 
     WHEN OTHERS => RESETICV<='0'; TIMER_OUT<='0'; ENICV<='0';
   END CASE;
   IF (CURRENT_SA = SA2) THEN CHV<=CTC; 
