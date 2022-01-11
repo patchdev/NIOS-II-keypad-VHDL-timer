@@ -10,7 +10,7 @@ The system is designed to have a NIOS II economy procesor and an internal timer 
 Whenever one key on the keypad is pressed, the number or symbol must be shown in one of the 7-segment indicator. The keypad has a debouncing controller designed in software. 3 switches starts and stops the timer, indicated by 3 leds. The other 6 leds must be blinking when no switch is activated or key is pressed. All the IO is managed by interrupt routines.
 
 ## Watchdog Description
-The watchdog is managed by two Moore machines A and B. The main purpouses of these machines is to control when a especific count for the timer is set, when is the timer start or reset by the switches in the hardware.
+The watchdog is managed by two Moore machines A and B. The main purpouses of these machines is to control when a especific count for the timer is set, when is the timer started or reseted by the switches in the hardware.
   
 
 ## Top VHDL Description
