@@ -6,21 +6,21 @@
 
 
 /*______ADRESSES___________________________________*/
-.equ	addr_leds,		0x00003000
-.equ	addr_cols,		0x00003010
-.equ	addr_rows,		0x00003020
-.equ	addr_timerout,	0x00003030
-.equ 	addr_loadstart,	0x00003040
-.equ	addr_cttimer,	0x00003050
-.equ	addr_7segsA,	0x00003060
-.equ	addr_7segsB,	0x00003070
-.equ	addr_sp,		0x00001000
+.equ	addr_leds,          0x00003000
+.equ	addr_cols,          0x00003010
+.equ	addr_rows,          0x00003020
+.equ	addr_timerout,      0x00003030
+.equ 	addr_loadstart,     0x00003040
+.equ	addr_cttimer,       0x00003050
+.equ	addr_7segsA,        0x00003060
+.equ	addr_7segsB,        0x00003070
+.equ	addr_sp,            0x00001000
 
 /*______VALUES_____________________________________*/
-.equ	irq_keyboard,	0x02
-.equ	time_1s,		0x5F5E100 
-.equ	time_500ms,		0x17D7840
-.equ	time_5ms,		0x3D090
+.equ	irq_keyboard,   0x02
+.equ	time_1s,        0x5F5E100 
+.equ	time_500ms,	    0x17D7840
+.equ	time_5ms,       0x3D090
 
 br _start
 
