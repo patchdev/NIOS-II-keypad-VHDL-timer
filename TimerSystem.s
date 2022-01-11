@@ -19,7 +19,7 @@
 /*______VALUES_____________________________________*/
 .equ	irq_keyboard,   0x02
 .equ	time_1s,        0x5F5E100 
-.equ	time_500ms,	    0x17D7840
+.equ	time_500ms,     0x17D7840
 .equ	time_5ms,       0x3D090
 
 br _start
@@ -27,18 +27,18 @@ br _start
 
 .org 0x20
 /*__IHR_______________________________________________________________________________*/
-    rdctl	et, ipending			/*Copy ipending to exception temporary*/
-    beq		et, zero, NO_INTERRUPT 	/*If not ipending, int is not expected by device*/
-    subi	ea, ea, 4				/*Positioning ea (except return addr)*/
-    subi	sp, sp, 4				/*Positioning sp (stack pointer)*/
-    stw		r23, 0(sp)				/*Store r23s value into SP direction in Memory*/
-    andi	r23, et, irq_keyboard 	/*Checks if is different to irq1*/
-    beq		r23, zero, END_HANDLER 	/*if true, exit IHR. Possible another method */
+    rdctl	et, ipending            /*Copy ipending to exception temporary*/
+    beq		et, zero, NO_INTERRUPT  /*If not ipending, int is not expected by device*/
+    subi	ea, ea, 4               /*Positioning ea (except return addr)*/
+    subi	sp, sp, 4               /*Positioning sp (stack pointer)*/
+    stw		r23, 0(sp)              /*Store r23s value into SP direction in Memory*/
+    andi	r23, et, irq_keyboard   /*Checks if is different to irq1*/
+    beq		r23, zero, END_HANDLER  /*if true, exit IHR. Possible another method */
     call 	IRQ1
 
 END_HANDLER:
-    ldw		r23, 0(sp)  			/*Restore Stack*/
-    addi	sp, sp, 4   			/*Stack again at last position*/
+    ldw		r23, 0(sp)              /*Restore Stack*/
+    addi	sp, sp, 4               /*Stack again at last position*/
     br		EXIT_IHR	
 
 
@@ -73,16 +73,16 @@ IRQ1:
 /*__GENERAL INIT_______________________________*/
     movia	r2, addr_cols
     movui	r3, 0x0F
-    beq		r2, r3, EXIT_ISR	/*Security Check*/
+    beq		r2, r3, EXIT_ISR    /*Security Check*/
     
 /*__IDENTIFYING KEY_____________________*/	
-    movui	r6, 0x4				/*r6 contains number of iterations.*/
-    movia	r4, RowsMask 		/*Has dinamic pointer.*/
+    movui	r6, 0x4             /*r6 contains number of iterations.*/
+    movia	r4, RowsMask        /*Has dinamic pointer.*/
 POLLING:
-    ldbu	r5, 0(r4) 			/*Loads into r5 the current value of rowmask*/
+    ldbu	r5, 0(r4)           /*Loads into r5 the current value of rowmask*/
     
     movia	r2, addr_rows
-    stbio	r5, 0(r2)			/*Writes current rowmask value into device*/
+    stbio	r5, 0(r2)           /*Writes current rowmask value into device*/
 
     
 /*__TIMER DEBOUNCING____________________________*/
@@ -108,10 +108,10 @@ DEBOUNCE:
     
 /*__IDENTIFYING KEY (CONT)_______________*/	
     movia 	r2, addr_cols
-    ldwio	r3, 0(r2)				/*Read cols, again, stores in r3. RO*/
+    ldwio	r3, 0(r2)               /*Read cols, again, stores in r3. RO*/
     
     movui	r2, 0x000F
-    bne		r3, r2, KEY_DETECTED	/*For this iteration, if cols are 0xF, then go to next iteration*/
+    bne		r3, r2, KEY_DETECTED    /*For this iteration, if cols are 0xF, then go to next iteration*/
 
     
 /*From here continues if not key is detected*/
