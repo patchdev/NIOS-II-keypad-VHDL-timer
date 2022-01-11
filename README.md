@@ -1,7 +1,7 @@
 # NIOS-II-keypad-VHDL-timer
-Controlling a DE0 board using a custom VHDL Timer in NIOS II
-**Date** 2020
-**Author** Diego P
+Controlling a DE0 board using a custom VHDL Timer in NIOS II  
+**Date** 2020  
+**Author** Diego P  
   
 
 ## Description
