@@ -20,7 +20,7 @@ ARCHITECTURE behavioral OF watchdog IS
   SIGNAL NEXT_SA, CURRENT_SA            : state_a := SA0;
   SIGNAL NEXT_SB, CURRENT_SB            : state_b := SB0;
   SIGNAL ICV, CHV                       : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0'); 
-  SIGNAL RESETICV, ENICV, EDGES,IMIN    :  STD_LOGIC;
+  SIGNAL RESETICV, ENICV, EDGES,IMIN    : STD_LOGIC;
   SIGNAL counter                        : UNSIGNED(31 DOWNTO 0) := (OTHERS => '0');
 
   BEGIN   
